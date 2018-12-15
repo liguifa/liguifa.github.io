@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: JavaScript | 非洲卖红薯的</title>
+  <title>Redis常用命令 | 非洲卖红薯的</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="非洲卖红薯的">
-<meta property="og:url" content="http://yoursite.com/tags/JavaScript/index.html">
+  <meta name="description" content="# 命令 参数 例子 功能 返回值 原理     1 keys pattern: 键名配置模式 keys * 输出所有键 返回键列表 遍历所有键，和输入的模式做匹配，时间复杂度为O(n)，当Redis保存大量键时，线上环境禁止使用">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis常用命令">
+<meta property="og:url" content="http://yoursite.com/2018/12/15/Redis常用命令/index.html">
 <meta property="og:site_name" content="非洲卖红薯的">
+<meta property="og:description" content="# 命令 参数 例子 功能 返回值 原理     1 keys pattern: 键名配置模式 keys * 输出所有键 返回键列表 遍历所有键，和输入的模式做匹配，时间复杂度为O(n)，当Redis保存大量键时，线上环境禁止使用">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-15T10:16:47.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="非洲卖红薯的">
+<meta name="twitter:title" content="Redis常用命令">
+<meta name="twitter:description" content="# 命令 参数 例子 功能 返回值 原理     1 keys pattern: 键名配置模式 keys * 输出所有键 返回键列表 遍历所有键，和输入的模式做匹配，时间复杂度为O(n)，当Redis保存大量键时，线上环境禁止使用">
   
     <link rel="alternative" href="/atom.xml" title="非洲卖红薯的" type="application/atom+xml">
   
@@ -146,60 +151,171 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Redis常用命令" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/15/JavaScript作用域/" class="archive-article-date">
-  	<time datetime="2018-12-15T08:56:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/15/JavaScript作用域/">JavaScript作用域</a>
+    <h1 class="article-title" itemprop="name">
+      Redis常用命令
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/12/15/Redis常用命令/" class="archive-article-date">
+  	<time datetime="2018-12-15T10:15:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <table>
+<thead>
+<tr>
+<th style="text-align:left">#</th>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">例子</th>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">返回值</th>
+<th style="text-align:left">原理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">keys</td>
+<td style="text-align:left">pattern: 键名配置模式</td>
+<td style="text-align:left">keys *</td>
+<td style="text-align:left">输出所有键</td>
+<td style="text-align:left">返回键列表</td>
+<td style="text-align:left">遍历所有键，和输入的模式做匹配，时间复杂度为O(n)，当Redis保存大量键时，线上环境禁止使用</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>|2|dbsize|dbsize|获取键总数|返回键总数|直接获取Redis内置键总数变量，时间复杂度为O(1)|<br>|3|exists|key: 键名|exists key|检查键是否存在|1：键存在 0：键不存在|<br>|4|del|key: 键名列表|del key1 key2|删除键|1：删除成功 0：键不存在|<br>|5|expire|key: 键名 seconds:过期时间|expire key1 10|键过期    |1：设置成功 0：键不存在|<br>|6|ttl|key:键名|ttl key1|获取剩余过期时间|&gt;=0：键剩余的过期时间 -1：键没有设置过期时间 -2：键不存在|<br>|7|type|key: 键名|type key1|获取键的数据类型|返回键类型 如果键不存在则返回none|<br>|8|set|key: 键名 value: 值|set name hello|设置键|<br>|9|get|key:键名|get name|获取键值|键值|     </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/15/Redis常用命令/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/12/15/JavaScript作用域/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JavaScript作用域</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -222,9 +338,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,
