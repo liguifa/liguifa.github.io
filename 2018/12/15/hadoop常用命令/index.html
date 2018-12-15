@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JavaScript作用域 | 非洲卖红薯的</title>
+  <title>hadoop常用命令 | 非洲卖红薯的</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。">
-<meta name="keywords" content="JavaScript">
+  <meta name="description" content="FS Shell调用文件系统(FS)Shell命令应使用 bin/hadoop fs 的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme://authority/path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个">
+<meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript作用域">
-<meta property="og:url" content="http://yoursite.com/2018/12/15/JavaScript作用域/index.html">
+<meta property="og:title" content="hadoop常用命令">
+<meta property="og:url" content="http://yoursite.com/2018/12/15/hadoop常用命令/index.html">
 <meta property="og:site_name" content="非洲卖红薯的">
-<meta property="og:description" content="JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。">
+<meta property="og:description" content="FS Shell调用文件系统(FS)Shell命令应使用 bin/hadoop fs 的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme://authority/path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-15T09:54:56.106Z">
+<meta property="og:updated_time" content="2018-12-15T13:51:37.755Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript作用域">
-<meta name="twitter:description" content="JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。">
+<meta name="twitter:title" content="hadoop常用命令">
+<meta name="twitter:description" content="FS Shell调用文件系统(FS)Shell命令应使用 bin/hadoop fs 的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme://authority/path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个">
   
     <link rel="alternative" href="/atom.xml" title="非洲卖红薯的" type="application/atom+xml">
   
@@ -151,37 +151,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JavaScript作用域" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-hadoop常用命令" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JavaScript作用域
+      hadoop常用命令
     </h1>
   
 
         
-        <a href="/2018/12/15/JavaScript作用域/" class="archive-article-date">
-  	<time datetime="2018-12-15T08:56:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
+        <a href="/2018/12/15/hadoop常用命令/" class="archive-article-date">
+  	<time datetime="2018-12-15T13:51:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。<br><br>在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。<br><br>本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。<br><a id="more"></a></p>
-<h4 id="1、全局作用域"><a href="#1、全局作用域" class="headerlink" title="1、全局作用域"></a>1、全局作用域</h4><p>全局作用域，故名思议，全局作用域就是整个JavaScript代码范围。如下代码所示:</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var a = &quot;Hello&quot;;<br>console.log(a);  //Hello<br>for(var i in a){<br>    console.log(a[i]); //H、e、l、l、o}<br>    console.log(i);  // 4<br>}<br>function func(){<br>    console.log(a); //Hello<br>    console.log(i) // 4<br>}<br>func();</pre><br>在这段代码中，我们先声明了变量a，并对a赋值Hello，a是我们在全局上声明的变量，此时a的作用域为全局作用域，我们之后在直接输出、循环中输出、函数中输出都没有错误，说明此时a在任何位置均可以访问。同时在for循环中我们声明了变量i，for循环结束之后变量i并没有释放，而是输出了最后的值4，说明此时变量i的作用域为全局作用域。</p>
-<h3 id="2、函数作用域"><a href="#2、函数作用域" class="headerlink" title="2、函数作用域"></a>2、函数作用域</h3><p>函数作用域，故名思议，函数作用域就是生个函数范围。如下代码所示:</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">function fun() {<br>   var a = &quot;Hello&quot;;<br>   var i = 0;<br>   switch (i) {<br>           case 0: console.log(a); //hello<br>    }<br>    console.log(a); //hello<br>}<br>func();<br>console.log(a); //Error<br>var t = &quot;hello2&quot;;<br>function fun2() {<br>    var t = &quot;helllo3&quot;;<br>    console.log(t); //hello3<br>}<br></pre><br>在这段代码中，我们先声明了函数fun，在函数内部我们声明了变量a，此时a的作用域为函数作用域，之后我们在switch中输出，尽管我们的switch被大括号包裹，但是我们依然可以访问，说明函数作用域可以在函数的任意位置范围，之后在函数之外，我们输出变量a，此时就会出错，因为变量a的作用域为函数作用域，在函数为无法访问。在fun2中，我们声明了一个与全局变量同名的变量t，此时函数作用域中的t为覆盖全局作用域的t，这里的规则是子作用域覆盖父作用域，而全局作用域做为所有作用域的顶层作用域，一定会被子作用域的同名变量覆盖。</p>
-<h3 id="3、块级作用域"><a href="#3、块级作用域" class="headerlink" title="3、块级作用域"></a>3、块级作用域</h3><p>在ES6中，JavaScript引入了块级作用域，块级作用域的作用域范围为代码块。如下代码所示：</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">&quot;use strict&quot;<br>{    <br>    var a = 0;<br>    console.log(a);<br>}<br>console.log(a) //Error</pre><br>在上面代码中，我们使用use strict启用ES6，此时块级作用域起效，在之后的代码块中，变量a为块级作用域，在代码中访问正常，而在代码我们无法访问，与函数作用域类似，我们依然可以访问父作用域的变量，当发生变量重名是会覆盖父作用域的变量。</p>
-<h3 id="4、例子"><a href="#4、例子" class="headerlink" title="4、例子"></a>4、例子</h3><p>与作用域相关的问题中，大多出在for中，如下代码所示：</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var funcs = [];<br>for(var i = 0;i&lt;4;i++)&nbsp;{<br>    funcs.push(function()&nbsp;{<br>        console.log(i);<br>    });<br>}<br>funcs.forEach(function()&nbsp;{<br>    fun();<br>});<br></pre><br>我们执行这段代码，此时我们期望输出0、1、2、3，但是在实际运行时，我们输出了4、4、4、4，这是因为var声明的变量只能是全局作用域或函数作用域，如果我们这段代码运行在全局作用域的，那么变量i的作用域就是全局作用域，在整个作用域中变量i只有一个值，也就是在funs中我们引用的变量i和全局作用域的i是同一个并且只有一个，当循环结束后，变量的值变成了4，我们在执行funs，那么输出的就是变量i的值4。那么很明显这个问题是作用域没有独立引起的，解决办法就是新建一样作用域。</p>
-<h4 id="4-1-方法1"><a href="#4-1-方法1" class="headerlink" title="4.1 方法1"></a>4.1 方法1</h4><p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var funcs = [];for (var i = 0; i &lt; 4; i++) {<br>    funcs.push((function (in_i) {<br>        return function () {<br>            console.log(in_i);<br>        }<br>    })(i));<br>}<br>funcs.forEach(function () {<br>    fun();<br>});</pre><br>如上面的代码所示，我们使用闭包，闭包就是一个立即执行的函数，此时我们使用闭包新建了一个函数作用域，并把变量i参入，在闭包内部会拷贝一份变量i到in_i，此时for内部不再是单一作用域，做个作用域有多个in_i。</p>
-<h4 id="4-2-方法2"><a href="#4-2-方法2" class="headerlink" title="4.2 方法2"></a>4.2 方法2</h4><p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var funcs = [];for(let i = 0;i&lt;4;i++) {<br>    funcs.push(function() {<br>        console.log(i);<br>    });<br>}<br>funcs.forEach(function() {<br>    fun();<br>});</pre><br>如上代码所示，我们将var替换成了let，let是ES6声明变量的方法，此时let声明后i变成了块级作用域变量，也就是新建了一个块级作用域，在for内部i不再是同一个，而是在一个作用域中一个变量i。</p>
+        <h3 id="FS-Shell"><a href="#FS-Shell" class="headerlink" title="FS Shell"></a>FS Shell</h3><p>调用文件系统(FS)Shell命令应使用 bin/hadoop fs <args>的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme://authority/path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个HDFS文件或目录比如/parent/child可以表示成hdfs://namenode:namenodeport/parent/child，或者更简单的/parent/child（假设你配置文件中的默认值是namenode:namenodeport）。大多数FS Shell命令的行为和对应的Unix Shell命令类似，不同之处会在下面介绍各命令使用详情时指出。出错信息会输出到stderr，其他信息输出到stdout。</args></p>
+<h5 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h5><p>使用方法：hadoop fs -cat URI [URI …]<br>将路径指定文件的内容输出到stdout。<br>示例：</p>
+<ul>
+<li>hadoop fs -cat hdfs://host1:port1/file1 hdfs://host2:port2/file2</li>
+<li>hadoop fs -cat file:///file3 /user/hadoop/file4<br>返回值：成功返回0，失败返回-1。<h5 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h5>使用方法：hadoop fs -chgrp [-R] GROUP URI [URI …] Change group association of files. With -R, make the change recursively through the directory structure. The user must be the owner of files, or else a super-user. Additional information is in the Permissions User Guide. –&gt;<br>改变文件所属的组。使用-R将使改变在目录结构下递归进行。命令的使用者必须是文件的所有者或者超级用户。更多的信息请参见HDFS权限用户指南。<h5 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h5>使用方法：hadoop fs -chmod [-R] &lt;MODE[,MODE]… | OCTALMODE&gt; URI [URI …]<br>改变文件的权限。使用-R将使改变在目录结构下递归进行。命令的使用者必须是文件的所有者或者超级用户。更多的信息请参见HDFS权限用户指南。<h6 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h6>使用方法：hadoop fs -chown [-R] [OWNER][:[GROUP]] URI [URI ]<br>改变文件的拥有者。使用-R将使改变在目录结构下递归进行。命令的使用者必须是超级用户。更多的信息请参见HDFS权限用户指南。<h5 id="copyFromLocal"><a href="#copyFromLocal" class="headerlink" title="copyFromLocal"></a>copyFromLocal</h5>使用方法：hadoop fs -copyFromLocal <localsrc> URI<br>除了限定源路径是一个本地文件外，和put命令相似。<h5 id="copyToLocal"><a href="#copyToLocal" class="headerlink" title="copyToLocal"></a>copyToLocal</h5>使用方法：hadoop fs -copyToLocal [-ignorecrc] [-crc] URI <localdst><br>除了限定目标路径是一个本地文件外，和get命令类似。<h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h5>使用方法：hadoop fs -cp URI [URI …] <dest><br>将文件从源路径复制到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。<br>示例：</dest></localdst></localsrc></li>
+<li>hadoop fs -cp /user/hadoop/file1 /user/hadoop/file2</li>
+<li>hadoop fs -cp /user/hadoop/file1 /user/hadoop/file2 /user/hadoop/dir<br>返回值：成功返回0，失败返回-1。<h5 id="du"><a href="#du" class="headerlink" title="du"></a>du</h5>使用方法：hadoop fs -du URI [URI …]<br>显示目录中所有文件的大小，或者当只指定一个文件时，显示此文件的大小。<br>示例：hadoop fs -du /user/hadoop/dir1 /user/hadoop/file1 hdfs://host:port/user/hadoop/dir1<br>返回值：成功返回0，失败返回-1。 <h5 id="dus"><a href="#dus" class="headerlink" title="dus"></a>dus</h5>使用方法：hadoop fs -dus <args><br>显示文件的大小。<h5 id="expunge"><a href="#expunge" class="headerlink" title="expunge"></a>expunge</h5>使用方法：hadoop fs -expunge<br>清空回收站。请参考HDFS设计文档以获取更多关于回收站特性的信息。<h5 id="get"><a href="#get" class="headerlink" title="get"></a>get</h5>使用方法：hadoop fs -get [-ignorecrc] [-crc] <src> <localdst><br>复制文件到本地文件系统。可用-ignorecrc选项复制CRC校验失败的文件。使用-crc选项复制文件以及CRC信息。<br>示例：</localdst></src></args></li>
+<li>hadoop fs -get /user/hadoop/file localfile</li>
+<li>hadoop fs -get hdfs://host:port/user/hadoop/file localfile<br>返回值：成功返回0，失败返回-1。<h5 id="getmerge"><a href="#getmerge" class="headerlink" title="getmerge"></a>getmerge</h5>使用方法：hadoop fs -getmerge <src> <localdst> [addnl]<br>接受一个源目录和一个目标文件作为输入，并且将源目录中所有的文件连接成本地目标文件。addnl是可选的，用于指定在每个文件结尾添加一个换行符。<h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h5>使用方法：hadoop fs -ls <args><br>如果是文件，则按照如下格式返回文件信息：<br>文件名 &lt;副本数&gt; 文件大小 修改日期 修改时间 权限 用户ID 组ID<br>如果是目录，则返回它直接子文件的一个列表，就像在Unix中一样。目录返回列表的信息如下：<br>目录名 <dir> 修改日期 修改时间 权限 用户ID 组ID<br>示例：hadoop fs -ls /user/hadoop/file1 /user/hadoop/file2 hdfs://host:port/user/hadoop/dir1 /nonexistentfile<br>返回值：成功返回0，失败返回-1。 </dir></args></localdst></src></li>
+</ul>
+<h5 id="lsr"><a href="#lsr" class="headerlink" title="lsr"></a>lsr</h5><p>使用方法：hadoop fs -lsr <args><br>ls命令的递归版本。类似于Unix中的ls -R。</args></p>
+<h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h5><p>使用方法：hadoop fs -mkdir <paths><br>接受路径指定的uri作为参数，创建这些目录。其行为类似于Unix的mkdir -p，它会创建路径中的各级父目录。<br>示例：</paths></p>
+<ul>
+<li>hadoop fs -mkdir /user/hadoop/dir1 /user/hadoop/dir2</li>
+<li>hadoop fs -mkdir hdfs://host1:port1/user/hadoop/dir hdfs://host2:port2/user/hadoop/dir<br>返回值：成功返回0，失败返回-1。<h5 id="movefromLocal"><a href="#movefromLocal" class="headerlink" title="movefromLocal"></a>movefromLocal</h5>使用方法：dfs -moveFromLocal <src> <dst><br>输出一个”not implemented“信息。<h6 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h6>使用方法：hadoop fs -mv URI [URI …] <dest><br>将文件从源路径移动到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。不允许在不同的文件系统间移动文件。<br>示例：</dest></dst></src></li>
+<li>hadoop fs -mv /user/hadoop/file1 /user/hadoop/file2</li>
+<li>hadoop fs -mv hdfs://host:port/file1 hdfs://host:port/file2 hdfs://host:port/file3 hdfs://host:port/dir1<br>返回值：成功返回0，失败返回-1。<h6 id="put"><a href="#put" class="headerlink" title="put"></a>put</h6>使用方法：hadoop fs -put <localsrc> … <dst><br>从本地文件系统中复制单个或多个源路径到目标文件系统。也支持从标准输入中读取输入写入目标文件系统。</dst></localsrc></li>
+<li>hadoop fs -put localfile /user/hadoop/hadoopfile</li>
+<li>hadoop fs -put localfile1 localfile2 /user/hadoop/hadoopdir</li>
+<li>hadoop fs -put localfile hdfs://host:port/hadoop/hadoopfile</li>
+<li>hadoop fs -put - hdfs://host:port/hadoop/hadoopfile<br>从标准输入中读取输入。<br>返回值：成功返回0，失败返回-1。<h6 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h6>使用方法：hadoop fs -rm URI [URI …]<br>删除指定的文件。只删除非空目录和文件。请参考rmr命令了解递归删除。<br>示例：</li>
+<li>hadoop fs -rm hdfs://host:port/file /user/hadoop/emptydir<br>返回值：成功返回0，失败返回-1。<h6 id="rmr"><a href="#rmr" class="headerlink" title="rmr"></a>rmr</h6>使用方法：hadoop fs -rmr URI [URI …]<br>delete的递归版本。<br>示例：</li>
+<li>hadoop fs -rmr /user/hadoop/dir</li>
+<li>hadoop fs -rmr hdfs://host:port/user/hadoop/dir<br>返回值：成功返回0，失败返回-1。<h6 id="setrep"><a href="#setrep" class="headerlink" title="setrep"></a>setrep</h6>使用方法：hadoop fs -setrep [-R] <path><br>改变一个文件的副本系数。-R选项用于递归改变目录下所有文件的副本系数。<br>示例：</path></li>
+<li>hadoop fs -setrep -w 3 -R /user/hadoop/dir1<br>返回值：成功返回0，失败返回-1。<h6 id="stat"><a href="#stat" class="headerlink" title="stat"></a>stat</h6>使用方法：hadoop fs -stat URI [URI …]<br>返回指定路径的统计信息。<br>示例：</li>
+<li>hadoop fs -stat path<br>返回值：成功返回0，失败返回-1。<h6 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h6>使用方法：hadoop fs -tail [-f] URI<br>将文件尾部1K字节的内容输出到stdout。支持-f选项，行为和Unix中一致。<br>示例：</li>
+<li>hadoop fs -tail pathname<br>返回值：成功返回0，失败返回-1。<h6 id="test"><a href="#test" class="headerlink" title="test"></a>test</h6>使用方法：hadoop fs -test -[ezd] URI<br>选项：<br>-e 检查文件是否存在。如果存在则返回0。<br>-z 检查文件是否是0字节。如果是则返回0。<br>-d 如果路径是个目录，则返回1，否则返回0。<br>示例：</li>
+<li>hadoop fs -test -e filename<h6 id="text"><a href="#text" class="headerlink" title="text"></a>text</h6>使用方法：hadoop fs -text <src><br>将源文件输出为文本格式。允许的格式是zip和TextRecordInputStream。<h6 id="touchz"><a href="#touchz" class="headerlink" title="touchz"></a>touchz</h6>使用方法：hadoop fs -touchz URI [URI …]<br>创建一个0字节的空文件。<br>示例：</src></li>
+<li>hadoop fs -touchz pathname<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
 
       
 
@@ -195,7 +214,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大数据</a>
         		</li>
       		
 		</ul>
@@ -251,7 +270,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/15/JavaScript作用域/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/15/hadoop常用命令/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -265,15 +284,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/12/15/Redis常用命令/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Redis常用命令
-        
-      </div>
-    </a>
   
+    <a href="/2018/12/15/Redis常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Redis常用命令</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
