@@ -190,11 +190,72 @@
 <td style="text-align:left">返回键列表</td>
 <td style="text-align:left">遍历所有键，和输入的模式做匹配，时间复杂度为O(n)，当Redis保存大量键时，线上环境禁止使用</td>
 </tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">dbsize</td>
+<td style="text-align:left">dbsize</td>
+<td style="text-align:left">获取键总数</td>
+<td style="text-align:left">返回键总数</td>
+<td style="text-align:left">直接获取Redis内置键总数变量，时间复杂度为O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">exists</td>
+<td style="text-align:left">key: 键名</td>
+<td style="text-align:left">exists key</td>
+<td style="text-align:left">检查键是否存在</td>
+<td style="text-align:left">1：键存在 0：键不存在</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">del</td>
+<td style="text-align:left">key: 键名列表</td>
+<td style="text-align:left">del key1 key2</td>
+<td style="text-align:left">删除键</td>
+<td style="text-align:left">1：删除成功 0：键不存在</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left">expire</td>
+<td style="text-align:left">key: 键名 seconds:过期时间</td>
+<td style="text-align:left">expire key1 10</td>
+<td style="text-align:left">键过期</td>
+<td style="text-align:left">1：设置成功 0：键不存在</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left">ttl</td>
+<td style="text-align:left">key:键名</td>
+<td style="text-align:left">ttl key1</td>
+<td style="text-align:left">获取剩余过期时间</td>
+<td style="text-align:left">&gt;=0：键剩余的过期时间 -1：键没有设置过期时间 -2：键不存在</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left">type</td>
+<td style="text-align:left">key: 键名</td>
+<td style="text-align:left">type key1</td>
+<td style="text-align:left">获取键的数据类型</td>
+<td style="text-align:left">返回键类型 如果键不存在则返回none</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left">set</td>
+<td style="text-align:left">key: 键名 value: 值</td>
+<td style="text-align:left">set name hello</td>
+<td style="text-align:left">设置键</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">get</td>
+<td style="text-align:left">key:键名</td>
+<td style="text-align:left">get name</td>
+<td style="text-align:left">获取键值</td>
+<td style="text-align:left">键值</td>
+</tr>
 </tbody>
 </table>
-        
-          <a class="article-more-a" href="/2018/12/15/Redis常用命令/#more">更多 >></a>
-        
+
       
 
       
