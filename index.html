@@ -168,41 +168,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="FS-Shell"><a href="#FS-Shell" class="headerlink" title="FS Shell"></a>FS Shell</h3><p>调用文件系统(FS)Shell命令应使用 bin/hadoop fs <args>的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme://authority/path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个HDFS文件或目录比如/parent/child可以表示成hdfs://namenode:namenodeport/parent/child，或者更简单的/parent/child（假设你配置文件中的默认值是namenode:namenodeport）。大多数FS Shell命令的行为和对应的Unix Shell命令类似，不同之处会在下面介绍各命令使用详情时指出。出错信息会输出到stderr，其他信息输出到stdout。</args></p>
-<h5 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h5><p>使用方法：hadoop fs -cat URI [URI …]<br>将路径指定文件的内容输出到stdout。<br>示例：</p>
-<ul>
-<li>hadoop fs -cat hdfs://host1:port1/file1 hdfs://host2:port2/file2</li>
-<li>hadoop fs -cat file:///file3 /user/hadoop/file4<br>返回值：成功返回0，失败返回-1。<h5 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h5>使用方法：hadoop fs -chgrp [-R] GROUP URI [URI …] Change group association of files. With -R, make the change recursively through the directory structure. The user must be the owner of files, or else a super-user. Additional information is in the Permissions User Guide. –&gt;<br>改变文件所属的组。使用-R将使改变在目录结构下递归进行。命令的使用者必须是文件的所有者或者超级用户。更多的信息请参见HDFS权限用户指南。<h5 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h5>使用方法：hadoop fs -chmod [-R] &lt;MODE[,MODE]… | OCTALMODE&gt; URI [URI …]<br>改变文件的权限。使用-R将使改变在目录结构下递归进行。命令的使用者必须是文件的所有者或者超级用户。更多的信息请参见HDFS权限用户指南。<h6 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h6>使用方法：hadoop fs -chown [-R] [OWNER][:[GROUP]] URI [URI ]<br>改变文件的拥有者。使用-R将使改变在目录结构下递归进行。命令的使用者必须是超级用户。更多的信息请参见HDFS权限用户指南。<h5 id="copyFromLocal"><a href="#copyFromLocal" class="headerlink" title="copyFromLocal"></a>copyFromLocal</h5>使用方法：hadoop fs -copyFromLocal <localsrc> URI<br>除了限定源路径是一个本地文件外，和put命令相似。<h5 id="copyToLocal"><a href="#copyToLocal" class="headerlink" title="copyToLocal"></a>copyToLocal</h5>使用方法：hadoop fs -copyToLocal [-ignorecrc] [-crc] URI <localdst><br>除了限定目标路径是一个本地文件外，和get命令类似。<h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h5>使用方法：hadoop fs -cp URI [URI …] <dest><br>将文件从源路径复制到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。<br>示例：</dest></localdst></localsrc></li>
-<li>hadoop fs -cp /user/hadoop/file1 /user/hadoop/file2</li>
-<li>hadoop fs -cp /user/hadoop/file1 /user/hadoop/file2 /user/hadoop/dir<br>返回值：成功返回0，失败返回-1。<h5 id="du"><a href="#du" class="headerlink" title="du"></a>du</h5>使用方法：hadoop fs -du URI [URI …]<br>显示目录中所有文件的大小，或者当只指定一个文件时，显示此文件的大小。<br>示例：hadoop fs -du /user/hadoop/dir1 /user/hadoop/file1 hdfs://host:port/user/hadoop/dir1<br>返回值：成功返回0，失败返回-1。 <h5 id="dus"><a href="#dus" class="headerlink" title="dus"></a>dus</h5>使用方法：hadoop fs -dus <args><br>显示文件的大小。<h5 id="expunge"><a href="#expunge" class="headerlink" title="expunge"></a>expunge</h5>使用方法：hadoop fs -expunge<br>清空回收站。请参考HDFS设计文档以获取更多关于回收站特性的信息。<h5 id="get"><a href="#get" class="headerlink" title="get"></a>get</h5>使用方法：hadoop fs -get [-ignorecrc] [-crc] <src> <localdst><br>复制文件到本地文件系统。可用-ignorecrc选项复制CRC校验失败的文件。使用-crc选项复制文件以及CRC信息。<br>示例：</localdst></src></args></li>
-<li>hadoop fs -get /user/hadoop/file localfile</li>
-<li>hadoop fs -get hdfs://host:port/user/hadoop/file localfile<br>返回值：成功返回0，失败返回-1。<h5 id="getmerge"><a href="#getmerge" class="headerlink" title="getmerge"></a>getmerge</h5>使用方法：hadoop fs -getmerge <src> <localdst> [addnl]<br>接受一个源目录和一个目标文件作为输入，并且将源目录中所有的文件连接成本地目标文件。addnl是可选的，用于指定在每个文件结尾添加一个换行符。<h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h5>使用方法：hadoop fs -ls <args><br>如果是文件，则按照如下格式返回文件信息：<br>文件名 &lt;副本数&gt; 文件大小 修改日期 修改时间 权限 用户ID 组ID<br>如果是目录，则返回它直接子文件的一个列表，就像在Unix中一样。目录返回列表的信息如下：<br>目录名 <dir> 修改日期 修改时间 权限 用户ID 组ID<br>示例：hadoop fs -ls /user/hadoop/file1 /user/hadoop/file2 hdfs://host:port/user/hadoop/dir1 /nonexistentfile<br>返回值：成功返回0，失败返回-1。 </dir></args></localdst></src></li>
-</ul>
-<h5 id="lsr"><a href="#lsr" class="headerlink" title="lsr"></a>lsr</h5><p>使用方法：hadoop fs -lsr <args><br>ls命令的递归版本。类似于Unix中的ls -R。</args></p>
-<h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h5><p>使用方法：hadoop fs -mkdir <paths><br>接受路径指定的uri作为参数，创建这些目录。其行为类似于Unix的mkdir -p，它会创建路径中的各级父目录。<br>示例：</paths></p>
-<ul>
-<li>hadoop fs -mkdir /user/hadoop/dir1 /user/hadoop/dir2</li>
-<li>hadoop fs -mkdir hdfs://host1:port1/user/hadoop/dir hdfs://host2:port2/user/hadoop/dir<br>返回值：成功返回0，失败返回-1。<h5 id="movefromLocal"><a href="#movefromLocal" class="headerlink" title="movefromLocal"></a>movefromLocal</h5>使用方法：dfs -moveFromLocal <src> <dst><br>输出一个”not implemented“信息。<h6 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h6>使用方法：hadoop fs -mv URI [URI …] <dest><br>将文件从源路径移动到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。不允许在不同的文件系统间移动文件。<br>示例：</dest></dst></src></li>
-<li>hadoop fs -mv /user/hadoop/file1 /user/hadoop/file2</li>
-<li>hadoop fs -mv hdfs://host:port/file1 hdfs://host:port/file2 hdfs://host:port/file3 hdfs://host:port/dir1<br>返回值：成功返回0，失败返回-1。<h6 id="put"><a href="#put" class="headerlink" title="put"></a>put</h6>使用方法：hadoop fs -put <localsrc> … <dst><br>从本地文件系统中复制单个或多个源路径到目标文件系统。也支持从标准输入中读取输入写入目标文件系统。</dst></localsrc></li>
-<li>hadoop fs -put localfile /user/hadoop/hadoopfile</li>
-<li>hadoop fs -put localfile1 localfile2 /user/hadoop/hadoopdir</li>
-<li>hadoop fs -put localfile hdfs://host:port/hadoop/hadoopfile</li>
-<li>hadoop fs -put - hdfs://host:port/hadoop/hadoopfile<br>从标准输入中读取输入。<br>返回值：成功返回0，失败返回-1。<h6 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h6>使用方法：hadoop fs -rm URI [URI …]<br>删除指定的文件。只删除非空目录和文件。请参考rmr命令了解递归删除。<br>示例：</li>
-<li>hadoop fs -rm hdfs://host:port/file /user/hadoop/emptydir<br>返回值：成功返回0，失败返回-1。<h6 id="rmr"><a href="#rmr" class="headerlink" title="rmr"></a>rmr</h6>使用方法：hadoop fs -rmr URI [URI …]<br>delete的递归版本。<br>示例：</li>
-<li>hadoop fs -rmr /user/hadoop/dir</li>
-<li>hadoop fs -rmr hdfs://host:port/user/hadoop/dir<br>返回值：成功返回0，失败返回-1。<h6 id="setrep"><a href="#setrep" class="headerlink" title="setrep"></a>setrep</h6>使用方法：hadoop fs -setrep [-R] <path><br>改变一个文件的副本系数。-R选项用于递归改变目录下所有文件的副本系数。<br>示例：</path></li>
-<li>hadoop fs -setrep -w 3 -R /user/hadoop/dir1<br>返回值：成功返回0，失败返回-1。<h6 id="stat"><a href="#stat" class="headerlink" title="stat"></a>stat</h6>使用方法：hadoop fs -stat URI [URI …]<br>返回指定路径的统计信息。<br>示例：</li>
-<li>hadoop fs -stat path<br>返回值：成功返回0，失败返回-1。<h6 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h6>使用方法：hadoop fs -tail [-f] URI<br>将文件尾部1K字节的内容输出到stdout。支持-f选项，行为和Unix中一致。<br>示例：</li>
-<li>hadoop fs -tail pathname<br>返回值：成功返回0，失败返回-1。<h6 id="test"><a href="#test" class="headerlink" title="test"></a>test</h6>使用方法：hadoop fs -test -[ezd] URI<br>选项：<br>-e 检查文件是否存在。如果存在则返回0。<br>-z 检查文件是否是0字节。如果是则返回0。<br>-d 如果路径是个目录，则返回1，否则返回0。<br>示例：</li>
-<li>hadoop fs -test -e filename<h6 id="text"><a href="#text" class="headerlink" title="text"></a>text</h6>使用方法：hadoop fs -text <src><br>将源文件输出为文本格式。允许的格式是zip和TextRecordInputStream。<h6 id="touchz"><a href="#touchz" class="headerlink" title="touchz"></a>touchz</h6>使用方法：hadoop fs -touchz URI [URI …]<br>创建一个0字节的空文件。<br>示例：</src></li>
-<li>hadoop fs -touchz pathname<br>返回值：成功返回0，失败返回-1。</li>
-</ul>
-
+        <h3 id="FS-Shell"><a href="#FS-Shell" class="headerlink" title="FS Shell"></a>FS Shell</h3><p>调用文件系统(FS)Shell命令应使用 bin/hadoop fs <args>的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme://authority/path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个HDFS文件或目录比如/parent/child可以表示成hdfs://namenode:namenodeport/parent/child，或者更简单的/parent/child（假设你配置文件中的默认值是namenode:namenodeport）。大多数FS Shell命令的行为和对应的Unix Shell命令类似，不同之处会在下面介绍各命令使用详情时指出。出错信息会输出到stderr，其他信息输出到stdout。<br>
+        
+          <a class="article-more-a" href="/2018/12/15/hadoop常用命令/#more">更多 >></a>
+        
       
 
       
-    </div>
+    </args></p></div>
     <div class="article-info article-info-index">
       
       
@@ -602,11 +575,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
               </li>
              
               <li class="article-tag-list-item">
