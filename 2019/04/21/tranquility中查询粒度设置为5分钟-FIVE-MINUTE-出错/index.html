@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JavaScript作用域 | 非洲卖红薯的</title>
+  <title>tranquility中查询粒度设置为5分钟(FIVE_MINUTE)出错 | 非洲卖红薯的</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。">
-<meta name="keywords" content="JavaScript">
+  <meta name="description" content="[错误详细]在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
+<meta name="keywords" content="druid">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript作用域">
-<meta property="og:url" content="http://yoursite.com/2018/12/15/JavaScript作用域/index.html">
+<meta property="og:title" content="tranquility中查询粒度设置为5分钟(FIVE_MINUTE)出错">
+<meta property="og:url" content="http://yoursite.com/2019/04/21/tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错/index.html">
 <meta property="og:site_name" content="非洲卖红薯的">
-<meta property="og:description" content="JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。">
+<meta property="og:description" content="[错误详细]在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-15T09:54:56.106Z">
+<meta property="og:updated_time" content="2019-04-21T03:44:54.437Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript作用域">
-<meta name="twitter:description" content="JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。">
+<meta name="twitter:title" content="tranquility中查询粒度设置为5分钟(FIVE_MINUTE)出错">
+<meta name="twitter:description" content="[错误详细]在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
   
     <link rel="alternative" href="/atom.xml" title="非洲卖红薯的" type="application/atom+xml">
   
@@ -161,37 +161,29 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JavaScript作用域" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JavaScript作用域
+      tranquility中查询粒度设置为5分钟(FIVE_MINUTE)出错
     </h1>
   
 
         
-        <a href="/2018/12/15/JavaScript作用域/" class="archive-article-date">
-  	<time datetime="2018-12-15T08:56:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
+        <a href="/2019/04/21/tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错/" class="archive-article-date">
+  	<time datetime="2019-04-21T03:43:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>JaveScript 是Web前端开发的最重要的语言，在JavaScript中作用域是一个重要的基础知识点。<br><br>在JavaScript中共有三种作用域，分别是全局作用域、函数左右域和块级作用域。<br><br>本文会先对三种作用域做介绍，之后举一个常见的例子做整体介绍。<br><a id="more"></a></p>
-<h4 id="1、全局作用域"><a href="#1、全局作用域" class="headerlink" title="1、全局作用域"></a>1、全局作用域</h4><p>全局作用域，故名思议，全局作用域就是整个JavaScript代码范围。如下代码所示:</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var a = &quot;Hello&quot;;<br>console.log(a);  //Hello<br>for(var i in a){<br>    console.log(a[i]); //H、e、l、l、o}<br>    console.log(i);  // 4<br>}<br>function func(){<br>    console.log(a); //Hello<br>    console.log(i) // 4<br>}<br>func();</pre><br>在这段代码中，我们先声明了变量a，并对a赋值Hello，a是我们在全局上声明的变量，此时a的作用域为全局作用域，我们之后在直接输出、循环中输出、函数中输出都没有错误，说明此时a在任何位置均可以访问。同时在for循环中我们声明了变量i，for循环结束之后变量i并没有释放，而是输出了最后的值4，说明此时变量i的作用域为全局作用域。</p>
-<h3 id="2、函数作用域"><a href="#2、函数作用域" class="headerlink" title="2、函数作用域"></a>2、函数作用域</h3><p>函数作用域，故名思议，函数作用域就是生个函数范围。如下代码所示:</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">function fun() {<br>   var a = &quot;Hello&quot;;<br>   var i = 0;<br>   switch (i) {<br>           case 0: console.log(a); //hello<br>    }<br>    console.log(a); //hello<br>}<br>func();<br>console.log(a); //Error<br>var t = &quot;hello2&quot;;<br>function fun2() {<br>    var t = &quot;helllo3&quot;;<br>    console.log(t); //hello3<br>}<br></pre><br>在这段代码中，我们先声明了函数fun，在函数内部我们声明了变量a，此时a的作用域为函数作用域，之后我们在switch中输出，尽管我们的switch被大括号包裹，但是我们依然可以访问，说明函数作用域可以在函数的任意位置范围，之后在函数之外，我们输出变量a，此时就会出错，因为变量a的作用域为函数作用域，在函数为无法访问。在fun2中，我们声明了一个与全局变量同名的变量t，此时函数作用域中的t为覆盖全局作用域的t，这里的规则是子作用域覆盖父作用域，而全局作用域做为所有作用域的顶层作用域，一定会被子作用域的同名变量覆盖。</p>
-<h3 id="3、块级作用域"><a href="#3、块级作用域" class="headerlink" title="3、块级作用域"></a>3、块级作用域</h3><p>在ES6中，JavaScript引入了块级作用域，块级作用域的作用域范围为代码块。如下代码所示：</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">&quot;use strict&quot;<br>{    <br>    var a = 0;<br>    console.log(a);<br>}<br>console.log(a) //Error</pre><br>在上面代码中，我们使用use strict启用ES6，此时块级作用域起效，在之后的代码块中，变量a为块级作用域，在代码中访问正常，而在代码我们无法访问，与函数作用域类似，我们依然可以访问父作用域的变量，当发生变量重名是会覆盖父作用域的变量。</p>
-<h3 id="4、例子"><a href="#4、例子" class="headerlink" title="4、例子"></a>4、例子</h3><p>与作用域相关的问题中，大多出在for中，如下代码所示：</p>
-<p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var funcs = [];<br>for(var i = 0;i&lt;4;i++)&nbsp;{<br>    funcs.push(function()&nbsp;{<br>        console.log(i);<br>    });<br>}<br>funcs.forEach(function()&nbsp;{<br>    fun();<br>});<br></pre><br>我们执行这段代码，此时我们期望输出0、1、2、3，但是在实际运行时，我们输出了4、4、4、4，这是因为var声明的变量只能是全局作用域或函数作用域，如果我们这段代码运行在全局作用域的，那么变量i的作用域就是全局作用域，在整个作用域中变量i只有一个值，也就是在funs中我们引用的变量i和全局作用域的i是同一个并且只有一个，当循环结束后，变量的值变成了4，我们在执行funs，那么输出的就是变量i的值4。那么很明显这个问题是作用域没有独立引起的，解决办法就是新建一样作用域。</p>
-<h4 id="4-1-方法1"><a href="#4-1-方法1" class="headerlink" title="4.1 方法1"></a>4.1 方法1</h4><p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var funcs = [];for (var i = 0; i &lt; 4; i++) {<br>    funcs.push((function (in_i) {<br>        return function () {<br>            console.log(in_i);<br>        }<br>    })(i));<br>}<br>funcs.forEach(function () {<br>    fun();<br>});</pre><br>如上面的代码所示，我们使用闭包，闭包就是一个立即执行的函数，此时我们使用闭包新建了一个函数作用域，并把变量i参入，在闭包内部会拷贝一份变量i到in_i，此时for内部不再是单一作用域，做个作用域有多个in_i。</p>
-<h4 id="4-2-方法2"><a href="#4-2-方法2" class="headerlink" title="4.2 方法2"></a>4.2 方法2</h4><p><pre style="margin-top: 0px;color: #fff; line-height: 2.0; padding: 1.25rem 1.5rem; margin: .85rem 0; background-color: #282c34; border-radius: 6px; overflow: auto;">var funcs = [];for(let i = 0;i&lt;4;i++) {<br>    funcs.push(function() {<br>        console.log(i);<br>    });<br>}<br>funcs.forEach(function() {<br>    fun();<br>});</pre><br>如上代码所示，我们将var替换成了let，let是ES6声明变量的方法，此时let声明后i变成了块级作用域变量，也就是新建了一个块级作用域，在for内部i不再是同一个，而是在一个作用域中一个变量i。</p>
+        <p>[错误详细]<br>在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalArgumentException: Instantiation of [simple type, class io.druid.granularity.QueryGranularity] value failed: No enum constant io.druid.granularity.QueryGranularity.MillisIn.FIVE_MINUTE</span><br><span class="line">at com.fasterxml.jackson.databind.ObjectMapper._convert(ObjectMapper.java:2774) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.ObjectMapper.convertValue(ObjectMapper.java:2700) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.makeFireDepartment(DruidBeams.scala:406) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.fromConfigInternal(DruidBeams.scala:291) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.fromConfig(DruidBeams.scala:199) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaBeamUtils$.createTranquilizer(KafkaBeamUtils.scala:40) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaBeamUtils.createTranquilizer(KafkaBeamUtils.scala) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.TranquilityEventWriter.&lt;init&gt;(TranquilityEventWriter.java:64) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.WriterController.createWriter(WriterController.java:171) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.WriterController.getWriter(WriterController.java:98) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaConsumer$2.run(KafkaConsumer.java:231) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]</span><br><span class="line">at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]</span><br><span class="line">Caused by: com.fasterxml.jackson.databind.JsonMappingException: Instantiation of [simple type, class io.druid.granularity.QueryGranularity] value failed: No enum constant io.druid.granularity.QueryGranularity.MillisIn.FIVE_MINUTE</span><br><span class="line">at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.wrapException(StdValueInstantiator.java:405) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromString(StdValueInstantiator.java:284) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromString(BeanDeserializerBase.java:1141) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:135) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:126) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer._deserializeTypedUsingDefaultImpl(AsPropertyTypeDeserializer.java:129) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer.deserializeTypedFromObject(AsPropertyTypeDeserializer.java:75) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeWithType(BeanDeserializerBase.java:956) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:536) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:344) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1064) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:264) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:156) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:126) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer._deserializeTypedForId(AsPropertyTypeDeserializer.java:113) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer.deserializeTypedFromObject(AsPropertyTypeDeserializer.java:84) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.AbstractDeserializer.deserializeWithType(AbstractDeserializer.java:132) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:536) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:344) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1064) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:264) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:124) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:538) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:344) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1064) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:264) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:124) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.ObjectMapper._convert(ObjectMapper.java:2769) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">... 15 common frames omitted</span><br><span class="line">Caused by: java.lang.IllegalArgumentException: No enum constant io.druid.granularity.QueryGranularity.MillisIn.FIVE_MINUTE</span><br><span class="line">at java.lang.Enum.valueOf(Enum.java:238) ~[na:1.8.0_201]</span><br><span class="line">at io.druid.granularity.QueryGranularity$MillisIn.valueOf(QueryGranularity.java:62) ~[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br><span class="line">at io.druid.granularity.QueryGranularity.convertValue(QueryGranularity.java:79) ~[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br><span class="line">at io.druid.granularity.QueryGranularity.fromString(QueryGranularity.java:59) ~[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br><span class="line">at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]</span><br><span class="line">at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]</span><br><span class="line">at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]</span><br><span class="line">at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]</span><br><span class="line">at com.fasterxml.jackson.databind.introspect.AnnotatedMethod.call1(AnnotatedMethod.java:125) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromString(StdValueInstantiator.java:282) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">... 41 common frames omitted</span><br><span class="line"></span><br><span class="line">2019-04-03 11:06:08,485 - [ERROR] - from com.metamx.tranquility.kafka.KafkaConsumer in KafkaConsumer-1</span><br></pre></td></tr></table></figure></p>
+<p>[问题原因]<br>在tranquility的最新版本(0.8.2)中 引用的druid为0.9.0，0.9.0的druid不支持查询粒度设置为5分钟</p>
+<p>[解决方法]<br>下载druid 0.9.0源代码，修改代码文件(<a href="https://github.com/apache/incubator-druid/blob/0.9.0/processing/src/main/java/io/druid/granularity/QueryGranularity.java)" target="_blank" rel="noopener">https://github.com/apache/incubator-druid/blob/0.9.0/processing/src/main/java/io/druid/granularity/QueryGranularity.java)</a>, 在MillisIn中加入FIVE_MINUTE，之后build代码文件，替换io.druid.druid-processing-0.9.0.jar</p>
 
       
 
@@ -205,7 +197,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">druid</a>
         		</li>
       		
 		</ul>
@@ -261,7 +253,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/15/JavaScript作用域/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/04/21/tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -275,15 +267,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/12/15/灵活的DBContext生命周期管理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          灵活的DBContext生命周期管理
-        
-      </div>
-    </a>
   
+    <a href="/2019/04/21/tranquility中加载druid扩展报错/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">tranquility中加载druid扩展报错</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
