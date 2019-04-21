@@ -181,14 +181,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[错误详细]<br>在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalArgumentException: Instantiation of [simple type, class io.druid.granularity.QueryGranularity] value failed: No enum constant io.druid.granularity.QueryGranularity.MillisIn.FIVE_MINUTE</span><br><span class="line">at com.fasterxml.jackson.databind.ObjectMapper._convert(ObjectMapper.java:2774) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.ObjectMapper.convertValue(ObjectMapper.java:2700) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.makeFireDepartment(DruidBeams.scala:406) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.fromConfigInternal(DruidBeams.scala:291) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.fromConfig(DruidBeams.scala:199) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaBeamUtils$.createTranquilizer(KafkaBeamUtils.scala:40) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaBeamUtils.createTranquilizer(KafkaBeamUtils.scala) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.TranquilityEventWriter.&lt;init&gt;(TranquilityEventWriter.java:64) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.WriterController.createWriter(WriterController.java:171) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.WriterController.getWriter(WriterController.java:98) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaConsumer$2.run(KafkaConsumer.java:231) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]</span><br><span class="line">at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]</span><br><span class="line">Caused by: com.fasterxml.jackson.databind.JsonMappingException: Instantiation of [simple type, class io.druid.granularity.QueryGranularity] value failed: No enum constant io.druid.granularity.QueryGranularity.MillisIn.FIVE_MINUTE</span><br><span class="line">at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.wrapException(StdValueInstantiator.java:405) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromString(StdValueInstantiator.java:284) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromString(BeanDeserializerBase.java:1141) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:135) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:126) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer._deserializeTypedUsingDefaultImpl(AsPropertyTypeDeserializer.java:129) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer.deserializeTypedFromObject(AsPropertyTypeDeserializer.java:75) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeWithType(BeanDeserializerBase.java:956) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:536) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:344) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1064) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:264) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:156) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:126) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer._deserializeTypedForId(AsPropertyTypeDeserializer.java:113) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.jsontype.impl.AsPropertyTypeDeserializer.deserializeTypedFromObject(AsPropertyTypeDeserializer.java:84) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.AbstractDeserializer.deserializeWithType(AbstractDeserializer.java:132) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:536) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:344) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1064) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:264) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:124) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:538) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:344) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1064) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:264) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:124) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.ObjectMapper._convert(ObjectMapper.java:2769) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">... 15 common frames omitted</span><br><span class="line">Caused by: java.lang.IllegalArgumentException: No enum constant io.druid.granularity.QueryGranularity.MillisIn.FIVE_MINUTE</span><br><span class="line">at java.lang.Enum.valueOf(Enum.java:238) ~[na:1.8.0_201]</span><br><span class="line">at io.druid.granularity.QueryGranularity$MillisIn.valueOf(QueryGranularity.java:62) ~[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br><span class="line">at io.druid.granularity.QueryGranularity.convertValue(QueryGranularity.java:79) ~[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br><span class="line">at io.druid.granularity.QueryGranularity.fromString(QueryGranularity.java:59) ~[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br><span class="line">at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]</span><br><span class="line">at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]</span><br><span class="line">at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]</span><br><span class="line">at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]</span><br><span class="line">at com.fasterxml.jackson.databind.introspect.AnnotatedMethod.call1(AnnotatedMethod.java:125) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromString(StdValueInstantiator.java:282) ~[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br><span class="line">... 41 common frames omitted</span><br><span class="line"></span><br><span class="line">2019-04-03 11:06:08,485 - [ERROR] - from com.metamx.tranquility.kafka.KafkaConsumer in KafkaConsumer-1</span><br></pre></td></tr></table></figure></p>
-<p>[问题原因]<br>在tranquility的最新版本(0.8.2)中 引用的druid为0.9.0，0.9.0的druid不支持查询粒度设置为5分钟</p>
-<p>[解决方法]<br>下载druid 0.9.0源代码，修改代码文件(<a href="https://github.com/apache/incubator-druid/blob/0.9.0/processing/src/main/java/io/druid/granularity/QueryGranularity.java)" target="_blank" rel="noopener">https://github.com/apache/incubator-druid/blob/0.9.0/processing/src/main/java/io/druid/granularity/QueryGranularity.java)</a>, 在MillisIn中加入FIVE_MINUTE，之后build代码文件，替换io.druid.druid-processing-0.9.0.jar</p>
-
+        <p>[错误详细]<br>在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下<br>
+        
+          <a class="article-more-a" href="/2019/04/21/tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错/#more">更多 >></a>
+        
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -257,14 +257,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>[错误详细]<br>在tranquility的extensions中、或命令行中加在druid扩展，启动后被告，错误如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">2019-04-04 15:01:55,480 - [ERROR] - from com.metamx.tranquility.kafka.KafkaConsumer in KafkaConsumer-0</span><br><span class="line">Exception:</span><br><span class="line">java.lang.NoClassDefFoundError: Could not initialize class com.metamx.tranquility.druid.DruidGuicer$</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.makeFireDepartment(DruidBeams.scala:406) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.fromConfigInternal(DruidBeams.scala:291) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.druid.DruidBeams$.fromConfig(DruidBeams.scala:199) ~[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaBeamUtils$.createTranquilizer(KafkaBeamUtils.scala:40) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaBeamUtils.createTranquilizer(KafkaBeamUtils.scala) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.TranquilityEventWriter.&lt;init&gt;(TranquilityEventWriter.java:64) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.WriterController.createWriter(WriterController.java:171) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.writer.WriterController.getWriter(WriterController.java:98) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at com.metamx.tranquility.kafka.KafkaConsumer$2.run(KafkaConsumer.java:231) ~[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br><span class="line">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]</span><br><span class="line">at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]</span><br></pre></td></tr></table></figure></p>
-<p>[问题原因]<br>tranquility中引用的jackson,和扩展中引用的jackson版本冲突</p>
-<p>[解决]<br>在0.9.0的druid中build插件放入tranquility中</p>
-
+        <p>[错误详细]<br>在tranquility的extensions中、或命令行中加在druid扩展，启动后被告，错误如下：<br>
+        
+          <a class="article-more-a" href="/2019/04/21/tranquility中加载druid扩展报错/#more">更多 >></a>
+        
       
 
       
-    </div>
+    </p></div>
     <div class="article-info article-info-index">
       
       
@@ -1134,31 +1134,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">druid</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1166,7 +1146,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">druid</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大数据</a>
               </li>
             
             <div class="clearfix"></div>
