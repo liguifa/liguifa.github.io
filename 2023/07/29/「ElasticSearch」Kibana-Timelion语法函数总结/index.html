@@ -24,7 +24,7 @@
 <meta property="og:description" content="工作中需要在Kibana上做图，但是对kibana上使用的Timelion语法一知半解的，遇到问题总数很难解决，故总结一下Timelion里面的函数，还可以给其它网友做个参考, 信息来自官方文档 es(或elasticsearch)从ElastSearch中提取数据, Timelion函数始终以点开始，后跟函数名称，后跟括号，其中包含函数的所有参数参数:  q: es的查询语句 metric: 值">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-29T12:05:35.000Z">
-<meta property="article:modified_time" content="2023-07-30T09:03:22.331Z">
+<meta property="article:modified_time" content="2023-07-30T09:08:10.114Z">
 <meta property="article:author" content="李贵发">
 <meta property="article:tag" content="大数据">
 <meta property="article:tag" content="ElasticSearch">
@@ -362,7 +362,7 @@
 <h3 id="abs"><a href="#abs" class="headerlink" title="abs"></a>abs</h3><p>返回序列列表中每个值的绝对值<br>参数: 无<br>示例:</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">.es(<br>    <span class="hljs-attribute">index</span>=<span class="hljs-string">&#x27;bigdata-hostlog-squid-*&#x27;</span>, <br>    <span class="hljs-attribute">timefield</span>=<span class="hljs-string">&#x27;timestamp&#x27;</span>,<br>    <span class="hljs-attribute">metric</span>=<span class="hljs-string">&#x27;sum:time_response&#x27;</span><br>)<br>.abs()<br></code></pre></td></tr></table></figure>
 
-<h3 id="add-或plus-或sum于add"><a href="#add-或plus-或sum于add" class="headerlink" title="add(或plus 或sum于add)"></a>add(或plus 或sum于add)</h3><p>将seriesList中的一个或多个系列的值添加到每个系列的每个位置<br>参数:</p>
+<h3 id="add-或plus-或sum"><a href="#add-或plus-或sum" class="headerlink" title="add(或plus 或sum)"></a>add(或plus 或sum)</h3><p>将seriesList中的一个或多个系列的值添加到每个系列的每个位置<br>参数:</p>
 <ul>
 <li>term: 将被叠加的值<ul>
 <li>number: 一个固定的数字</li>
@@ -775,6 +775,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/08/05/%E3%80%8CNomad%E3%80%8Dnomad%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-nomad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/" title="「Nomad」nomad学习笔记: 1 nomad环境部署">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">「Nomad」nomad学习笔记: 1 nomad环境部署</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
