@@ -1,0 +1,20 @@
+banner_img: /img/VCG211447088287.jpg
+
+navbar:
+  blog_title: 三硝基甲苯
+
+footer:
+  statistics:
+    enable: false
+    source: "busuanzi"  # 可选 leancloud | busuanzi  根据自己需求选择
+    pv_format: "总访问量 {} 次"  # 显示的文本，{}是数字的占位符（必须包含)，下同
+    uv_format: "总访客数 {} 人"
+
+dark_mode:
+  enable: true
+  default: auto
+
+index:
+  slogan:
+    enable: true
+    text: 脚步丈量时间，文字记录美好
