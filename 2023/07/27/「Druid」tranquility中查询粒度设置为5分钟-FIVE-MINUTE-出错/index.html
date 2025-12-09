@@ -1,0 +1,620 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="李贵发">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[错误详细]在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下   12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Druid」tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错">
+<meta property="og:url" content="http://example.com/2023/07/27/%E3%80%8CDruid%E3%80%8Dtranquility%E4%B8%AD%E6%9F%A5%E8%AF%A2%E7%B2%92%E5%BA%A6%E8%AE%BE%E7%BD%AE%E4%B8%BA5%E5%88%86%E9%92%9F-FIVE-MINUTE-%E5%87%BA%E9%94%99/index.html">
+<meta property="og:site_name" content="三硝基甲苯">
+<meta property="og:description" content="[错误详细]在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下   12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-27T12:31:34.000Z">
+<meta property="article:modified_time" content="2023-07-27T12:33:33.075Z">
+<meta property="article:author" content="李贵发">
+<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="Driud">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>「Druid」tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错 - 三硝基甲苯</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三硝基甲苯</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.mafengwo.cn/u/80743752.html" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>游记</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/VCG211447088287.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="「Druid」tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-27 20:31" pubdate>
+          2023年7月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          75 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">「Druid」tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>[错误详细]<br>在druid中查询时间粒度可以设置为MINUTE、HOURE、FILVE_MINUTE等，但在tranquility设置查询粒度为5分钟，启动后报错，错误信息如下  </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ava<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.IllegalArgumentException</span>: Instantiation of <span class="hljs-selector-attr">[simple type, class io.druid.granularity.QueryGranularity]</span> value failed: No enum constant io<span class="hljs-selector-class">.druid</span><span class="hljs-selector-class">.granularity</span><span class="hljs-selector-class">.QueryGranularity</span><span class="hljs-selector-class">.MillisIn</span><span class="hljs-selector-class">.FIVE_MINUTE</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.ObjectMapper</span>.<span class="hljs-built_in">_convert</span>(ObjectMapper<span class="hljs-selector-class">.java</span>:<span class="hljs-number">2774</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.ObjectMapper</span><span class="hljs-selector-class">.convertValue</span>(ObjectMapper<span class="hljs-selector-class">.java</span>:<span class="hljs-number">2700</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.druid</span>.DruidBeams$<span class="hljs-selector-class">.makeFireDepartment</span>(DruidBeams<span class="hljs-selector-class">.scala</span>:<span class="hljs-number">406</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.druid</span>.DruidBeams$<span class="hljs-selector-class">.fromConfigInternal</span>(DruidBeams<span class="hljs-selector-class">.scala</span>:<span class="hljs-number">291</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.druid</span>.DruidBeams$<span class="hljs-selector-class">.fromConfig</span>(DruidBeams<span class="hljs-selector-class">.scala</span>:<span class="hljs-number">199</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-core-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span>.KafkaBeamUtils$<span class="hljs-selector-class">.createTranquilizer</span>(KafkaBeamUtils<span class="hljs-selector-class">.scala</span>:<span class="hljs-number">40</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span><span class="hljs-selector-class">.KafkaBeamUtils</span><span class="hljs-selector-class">.createTranquilizer</span>(KafkaBeamUtils.scala) ~<span class="hljs-selector-attr">[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span><span class="hljs-selector-class">.writer</span><span class="hljs-selector-class">.TranquilityEventWriter</span>.&lt;init&gt;(TranquilityEventWriter<span class="hljs-selector-class">.java</span>:<span class="hljs-number">64</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span><span class="hljs-selector-class">.writer</span><span class="hljs-selector-class">.WriterController</span><span class="hljs-selector-class">.createWriter</span>(WriterController<span class="hljs-selector-class">.java</span>:<span class="hljs-number">171</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span><span class="hljs-selector-class">.writer</span><span class="hljs-selector-class">.WriterController</span><span class="hljs-selector-class">.getWriter</span>(WriterController<span class="hljs-selector-class">.java</span>:<span class="hljs-number">98</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br>at com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span>.KafkaConsumer$<span class="hljs-number">2</span><span class="hljs-selector-class">.run</span>(KafkaConsumer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">231</span>) ~<span class="hljs-selector-attr">[io.druid.tranquility-kafka-0.8.0.jar:0.8.0]</span><br>at java<span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.concurrent</span>.Executors<span class="hljs-variable">$RunnableAdapter</span><span class="hljs-selector-class">.call</span>(Executors<span class="hljs-selector-class">.java</span>:<span class="hljs-number">511</span>) <span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at java<span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.concurrent</span><span class="hljs-selector-class">.FutureTask</span><span class="hljs-selector-class">.run</span>(FutureTask<span class="hljs-selector-class">.java</span>:<span class="hljs-number">266</span>) <span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at java<span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.concurrent</span><span class="hljs-selector-class">.ThreadPoolExecutor</span><span class="hljs-selector-class">.runWorker</span>(ThreadPoolExecutor<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1149</span>) <span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at java<span class="hljs-selector-class">.util</span><span class="hljs-selector-class">.concurrent</span>.ThreadPoolExecutor<span class="hljs-variable">$Worker</span><span class="hljs-selector-class">.run</span>(ThreadPoolExecutor<span class="hljs-selector-class">.java</span>:<span class="hljs-number">624</span>) <span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.Thread</span><span class="hljs-selector-class">.run</span>(Thread<span class="hljs-selector-class">.java</span>:<span class="hljs-number">748</span>) <span class="hljs-selector-attr">[na:1.8.0_201]</span><br>Caused by: com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.JsonMappingException</span>: Instantiation of <span class="hljs-selector-attr">[simple type, class io.druid.granularity.QueryGranularity]</span> value failed: No enum constant io<span class="hljs-selector-class">.druid</span><span class="hljs-selector-class">.granularity</span><span class="hljs-selector-class">.QueryGranularity</span><span class="hljs-selector-class">.MillisIn</span><span class="hljs-selector-class">.FIVE_MINUTE</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.std</span><span class="hljs-selector-class">.StdValueInstantiator</span><span class="hljs-selector-class">.wrapException</span>(StdValueInstantiator<span class="hljs-selector-class">.java</span>:<span class="hljs-number">405</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.std</span><span class="hljs-selector-class">.StdValueInstantiator</span><span class="hljs-selector-class">.createFromString</span>(StdValueInstantiator<span class="hljs-selector-class">.java</span>:<span class="hljs-number">284</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializerBase</span><span class="hljs-selector-class">.deserializeFromString</span>(BeanDeserializerBase<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1141</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span>.<span class="hljs-built_in">_deserializeOther</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">135</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserialize</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">126</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.jsontype</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.AsPropertyTypeDeserializer</span>.<span class="hljs-built_in">_deserializeTypedUsingDefaultImpl</span>(AsPropertyTypeDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">129</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.jsontype</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.AsPropertyTypeDeserializer</span><span class="hljs-selector-class">.deserializeTypedFromObject</span>(AsPropertyTypeDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">75</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializerBase</span><span class="hljs-selector-class">.deserializeWithType</span>(BeanDeserializerBase<span class="hljs-selector-class">.java</span>:<span class="hljs-number">956</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.SettableBeanProperty</span><span class="hljs-selector-class">.deserialize</span>(SettableBeanProperty<span class="hljs-selector-class">.java</span>:<span class="hljs-number">536</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span>.<span class="hljs-built_in">_deserializeUsingPropertyBased</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">344</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializerBase</span><span class="hljs-selector-class">.deserializeFromObjectUsingNonDefault</span>(BeanDeserializerBase<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1064</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserializeFromObject</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">264</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span>.<span class="hljs-built_in">_deserializeOther</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">156</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserialize</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">126</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.jsontype</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.AsPropertyTypeDeserializer</span>.<span class="hljs-built_in">_deserializeTypedForId</span>(AsPropertyTypeDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">113</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.jsontype</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.AsPropertyTypeDeserializer</span><span class="hljs-selector-class">.deserializeTypedFromObject</span>(AsPropertyTypeDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">84</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.AbstractDeserializer</span><span class="hljs-selector-class">.deserializeWithType</span>(AbstractDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">132</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.SettableBeanProperty</span><span class="hljs-selector-class">.deserialize</span>(SettableBeanProperty<span class="hljs-selector-class">.java</span>:<span class="hljs-number">536</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span>.<span class="hljs-built_in">_deserializeUsingPropertyBased</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">344</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializerBase</span><span class="hljs-selector-class">.deserializeFromObjectUsingNonDefault</span>(BeanDeserializerBase<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1064</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserializeFromObject</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">264</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserialize</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">124</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.SettableBeanProperty</span><span class="hljs-selector-class">.deserialize</span>(SettableBeanProperty<span class="hljs-selector-class">.java</span>:<span class="hljs-number">538</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span>.<span class="hljs-built_in">_deserializeUsingPropertyBased</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">344</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializerBase</span><span class="hljs-selector-class">.deserializeFromObjectUsingNonDefault</span>(BeanDeserializerBase<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1064</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserializeFromObject</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">264</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.BeanDeserializer</span><span class="hljs-selector-class">.deserialize</span>(BeanDeserializer<span class="hljs-selector-class">.java</span>:<span class="hljs-number">124</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.ObjectMapper</span>.<span class="hljs-built_in">_convert</span>(ObjectMapper<span class="hljs-selector-class">.java</span>:<span class="hljs-number">2769</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>... <span class="hljs-number">15</span> common frames omitted<br>Caused by: java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.IllegalArgumentException</span>: No enum constant io<span class="hljs-selector-class">.druid</span><span class="hljs-selector-class">.granularity</span><span class="hljs-selector-class">.QueryGranularity</span><span class="hljs-selector-class">.MillisIn</span><span class="hljs-selector-class">.FIVE_MINUTE</span><br>at java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.Enum</span><span class="hljs-selector-class">.valueOf</span>(Enum<span class="hljs-selector-class">.java</span>:<span class="hljs-number">238</span>) ~<span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at io<span class="hljs-selector-class">.druid</span><span class="hljs-selector-class">.granularity</span>.QueryGranularity<span class="hljs-variable">$MillisIn</span><span class="hljs-selector-class">.valueOf</span>(QueryGranularity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">62</span>) ~<span class="hljs-selector-attr">[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br>at io<span class="hljs-selector-class">.druid</span><span class="hljs-selector-class">.granularity</span><span class="hljs-selector-class">.QueryGranularity</span><span class="hljs-selector-class">.convertValue</span>(QueryGranularity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">79</span>) ~<span class="hljs-selector-attr">[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br>at io<span class="hljs-selector-class">.druid</span><span class="hljs-selector-class">.granularity</span><span class="hljs-selector-class">.QueryGranularity</span><span class="hljs-selector-class">.fromString</span>(QueryGranularity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">59</span>) ~<span class="hljs-selector-attr">[io.druid.druid-processing-0.9.0.jar:0.9.0]</span><br>at sun<span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.NativeMethodAccessorImpl</span><span class="hljs-selector-class">.invoke0</span>(Native Method) ~<span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at sun<span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.NativeMethodAccessorImpl</span><span class="hljs-selector-class">.invoke</span>(NativeMethodAccessorImpl<span class="hljs-selector-class">.java</span>:<span class="hljs-number">62</span>) ~<span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at sun<span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.DelegatingMethodAccessorImpl</span><span class="hljs-selector-class">.invoke</span>(DelegatingMethodAccessorImpl<span class="hljs-selector-class">.java</span>:<span class="hljs-number">43</span>) ~<span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.Method</span><span class="hljs-selector-class">.invoke</span>(Method<span class="hljs-selector-class">.java</span>:<span class="hljs-number">498</span>) ~<span class="hljs-selector-attr">[na:1.8.0_201]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.introspect</span><span class="hljs-selector-class">.AnnotatedMethod</span><span class="hljs-selector-class">.call1</span>(AnnotatedMethod<span class="hljs-selector-class">.java</span>:<span class="hljs-number">125</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>at com<span class="hljs-selector-class">.fasterxml</span><span class="hljs-selector-class">.jackson</span><span class="hljs-selector-class">.databind</span><span class="hljs-selector-class">.deser</span><span class="hljs-selector-class">.std</span><span class="hljs-selector-class">.StdValueInstantiator</span><span class="hljs-selector-class">.createFromString</span>(StdValueInstantiator<span class="hljs-selector-class">.java</span>:<span class="hljs-number">282</span>) ~<span class="hljs-selector-attr">[com.fasterxml.jackson.core.jackson-databind-2.4.6.jar:2.4.6]</span><br>... <span class="hljs-number">41</span> common frames omitted<br><br><span class="hljs-number">2019</span>-<span class="hljs-number">04</span>-<span class="hljs-number">03</span> <span class="hljs-number">11</span>:<span class="hljs-number">06</span>:<span class="hljs-number">08</span>,<span class="hljs-number">485</span> - <span class="hljs-selector-attr">[ERROR]</span> - from com<span class="hljs-selector-class">.metamx</span><span class="hljs-selector-class">.tranquility</span><span class="hljs-selector-class">.kafka</span><span class="hljs-selector-class">.KafkaConsumer</span> <span class="hljs-keyword">in</span> KafkaConsumer-<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>[问题原因]<br>在tranquility的最新版本(0.8.2)中 引用的druid为0.9.0，0.9.0的druid不支持查询粒度设置为5分钟</p>
+<p>[解决方法]<br>下载druid 0.9.0源代码，修改代码文件(<a target="_blank" rel="noopener" href="https://github.com/apache/incubator-druid/blob/0.9.0/processing/src/main/java/io/druid/granularity/QueryGranularity.java">https://github.com/apache/incubator-druid/blob/0.9.0/processing/src/main/java/io/druid/granularity/QueryGranularity.java)</a>), 在MillisIn中加入FIVE_MINUTE，之后build代码文件，替换io.druid.druid-processing-0.9.0.jar</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="print-no-link">#大数据</a>
+      
+        <a href="/tags/Driud/" class="print-no-link">#Driud</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>「Druid」tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错</div>
+      <div>http://example.com/2023/07/27/「Druid」tranquility中查询粒度设置为5分钟-FIVE-MINUTE-出错/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>李贵发</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/27/%E3%80%8CDruid%E3%80%8Dtranquility%E4%B8%AD%E5%8A%A0%E8%BD%BDdruid%E6%89%A9%E5%B1%95%E6%8A%A5%E9%94%99/" title="「Druid」tranquility中加载druid扩展报错">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">「Druid」tranquility中加载druid扩展报错</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/27/%E3%80%8C%E5%B7%A5%E5%85%B7%E3%80%8Dmac%E8%AE%BE%E7%BD%AEssh%E4%B8%8D%E6%8E%89%E7%BA%BF/" title="「工具」mac设置ssh不掉线">
+                        <span class="hidden-mobile">「工具」mac设置ssh不掉线</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="李贵发">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="FS Shell调用文件系统(FS)Shell命令应使用 bin&#x2F;hadoop fs 的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme:&#x2F;&#x2F;authority&#x2F;path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Hadoop」Hadoop常用命令">
+<meta property="og:url" content="http://example.com/2023/07/27/%E3%80%8CHadoop%E3%80%8DHadoop%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="三硝基甲苯">
+<meta property="og:description" content="FS Shell调用文件系统(FS)Shell命令应使用 bin&#x2F;hadoop fs 的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme:&#x2F;&#x2F;authority&#x2F;path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-27T05:41:45.000Z">
+<meta property="article:modified_time" content="2023-07-27T06:00:38.261Z">
+<meta property="article:author" content="李贵发">
+<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="Hadoop">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>「Hadoop」Hadoop常用命令 - 三硝基甲苯</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三硝基甲苯</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.mafengwo.cn/u/80743752.html" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>游记</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/VCG211447088287.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="「Hadoop」Hadoop常用命令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-27 13:41" pubdate>
+          2023年7月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">「Hadoop」Hadoop常用命令</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="FS-Shell"><a href="#FS-Shell" class="headerlink" title="FS Shell"></a><a href="#FS-Shell" title="FS Shell"></a>FS Shell</h3><p>调用文件系统(FS)Shell命令应使用 bin&#x2F;hadoop fs 的形式。 所有的的FS shell命令使用URI路径作为参数。URI格式是scheme:&#x2F;&#x2F;authority&#x2F;path。对HDFS文件系统，scheme是hdfs，对本地文件系统，scheme是file。其中scheme和authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个HDFS文件或目录比如&#x2F;parent&#x2F;child可以表示成hdfs:&#x2F;&#x2F;namenode:namenodeport&#x2F;parent&#x2F;child，或者更简单的&#x2F;parent&#x2F;child（假设你配置文件中的默认值是namenode:namenodeport）。大多数FS Shell命令的行为和对应的Unix Shell命令类似，不同之处会在下面介绍各命令使用详情时指出。出错信息会输出到stderr，其他信息输出到stdout。  </p>
+<h5 id="cat"><a href="#cat" class="headerlink" title="cat"></a><a href="#cat" title="cat"></a>cat</h5><p>使用方法：hadoop fs -cat URI [URI …]<br>将路径指定文件的内容输出到stdout。<br>示例：</p>
+<ul>
+<li>hadoop fs -cat hdfs:&#x2F;&#x2F;host1:port1&#x2F;file1 hdfs:&#x2F;&#x2F;host2:port2&#x2F;file2</li>
+<li>hadoop fs -cat file:&#x2F;&#x2F;&#x2F;file3 &#x2F;user&#x2F;hadoop&#x2F;file4<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h5 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a><a href="#chgrp" title="chgrp"></a>chgrp</h5><p>使用方法：hadoop fs -chgrp [-R] GROUP URI [URI …] Change group association of files. With -R, make the change recursively through the directory structure. The user must be the owner of files, or else a super-user. Additional information is in the Permissions User Guide. –&gt;<br>改变文件所属的组。使用-R将使改变在目录结构下递归进行。命令的使用者必须是文件的所有者或者超级用户。更多的信息请参见HDFS权限用户指南。</p>
+<h5 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a><a href="#chmod" title="chmod"></a>chmod</h5><p>使用方法：hadoop fs -chmod [-R] &lt;MODE[,MODE]… | OCTALMODE&gt; URI [URI …]<br>改变文件的权限。使用-R将使改变在目录结构下递归进行。命令的使用者必须是文件的所有者或者超级用户。更多的信息请参见HDFS权限用户指南。</p>
+<h6 id="chown"><a href="#chown" class="headerlink" title="chown"></a><a href="#chown" title="chown"></a>chown</h6><p>使用方法：hadoop fs -chown [-R] [OWNER][:[GROUP]] URI [URI ]<br>改变文件的拥有者。使用-R将使改变在目录结构下递归进行。命令的使用者必须是超级用户。更多的信息请参见HDFS权限用户指南。</p>
+<h5 id="copyFromLocal"><a href="#copyFromLocal" class="headerlink" title="copyFromLocal"></a><a href="#copyFromLocal" title="copyFromLocal"></a>copyFromLocal</h5><p>使用方法：hadoop fs -copyFromLocal URI<br>除了限定源路径是一个本地文件外，和put命令相似。</p>
+<h5 id="copyToLocal"><a href="#copyToLocal" class="headerlink" title="copyToLocal"></a><a href="#copyToLocal" title="copyToLocal"></a>copyToLocal</h5><p>使用方法：hadoop fs -copyToLocal [-ignorecrc] [-crc] URI<br>除了限定目标路径是一个本地文件外，和get命令类似。</p>
+<h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a><a href="#cp" title="cp"></a>cp</h5><p>使用方法：hadoop fs -cp URI [URI …]<br>将文件从源路径复制到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。<br>示例：</p>
+<ul>
+<li>hadoop fs -cp &#x2F;user&#x2F;hadoop&#x2F;file1 &#x2F;user&#x2F;hadoop&#x2F;file2</li>
+<li>hadoop fs -cp &#x2F;user&#x2F;hadoop&#x2F;file1 &#x2F;user&#x2F;hadoop&#x2F;file2 &#x2F;user&#x2F;hadoop&#x2F;dir<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h5 id="du"><a href="#du" class="headerlink" title="du"></a><a href="#du" title="du"></a>du</h5><p>使用方法：hadoop fs -du URI [URI …]<br>显示目录中所有文件的大小，或者当只指定一个文件时，显示此文件的大小。<br>示例：</p>
+<ul>
+<li>hadoop fs -du &#x2F;user&#x2F;hadoop&#x2F;dir1 &#x2F;user&#x2F;*   hadoop&#x2F;file1 hdfs:&#x2F;&#x2F;host:port&#x2F;user&#x2F;hadoop&#x2F;dir1<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h5 id="dus"><a href="#dus" class="headerlink" title="dus"></a><a href="#dus" title="dus"></a>dus</h5><p>使用方法：hadoop fs -dus<br>显示文件的大小。</p>
+<h5 id="expunge"><a href="#expunge" class="headerlink" title="expunge"></a><a href="#expunge" title="expunge"></a>expunge</h5><p>使用方法：hadoop fs -expunge<br>清空回收站。请参考HDFS设计文档以获取更多关于回收站特性的信息。</p>
+<h5 id="get"><a href="#get" class="headerlink" title="get"></a><a href="#get" title="get"></a>get</h5><p>使用方法：hadoop fs -get [-ignorecrc] [-crc]<br>复制文件到本地文件系统。可用-ignorecrc选项复制CRC校验失败的文件。使用-crc选项复制文件以及CRC信息。<br>示例：</p>
+<ul>
+<li>hadoop fs -get &#x2F;user&#x2F;hadoop&#x2F;file localfile</li>
+<li>hadoop fs -get hdfs:&#x2F;&#x2F;host:port&#x2F;user&#x2F;hadoop&#x2F;file localfile<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h5 id="getmerge"><a href="#getmerge" class="headerlink" title="getmerge"></a><a href="#getmerge" title="getmerge"></a>getmerge</h5><p>使用方法：hadoop fs -getmerge [addnl]<br>接受一个源目录和一个目标文件作为输入，并且将源目录中所有的文件连接成本地目标文件。addnl是可选的，用于指定在每个文件结尾添加一个换行符。</p>
+<h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a><a href="#ls" title="ls"></a>ls</h5><p>使用方法：hadoop fs -ls<br>如果是文件，则按照如下格式返回文件信息：<br>文件名 &lt;副本数&gt; 文件大小 修改日期 修改时间 权限 用户ID 组ID<br>如果是目录，则返回它直接子文件的一个列表，就像在Unix中一样。目录返回列表的信息如下：<br>目录名</p>
+<p>修改日期 修改时间 权限 用户ID 组ID<br>示例：</p>
+<ul>
+<li>hadoop fs -ls &#x2F;user&#x2F;hadoop&#x2F;file1 &#x2F;user&#x2F;hadoop&#x2F;file2 hdfs:&#x2F;&#x2F;host:port&#x2F;user&#x2F;hadoop&#x2F;dir1 &#x2F;nonexistentfile<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h5 id="lsr"><a href="#lsr" class="headerlink" title="lsr"></a><a href="#lsr" title="lsr"></a>lsr</h5><p>使用方法：hadoop fs -lsr<br>ls命令的递归版本。类似于Unix中的ls -R。</p>
+<h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a><a href="#mkdir" title="mkdir"></a>mkdir</h5><p>使用方法：hadoop fs -mkdir<br>接受路径指定的uri作为参数，创建这些目录。其行为类似于Unix的mkdir -p，它会创建路径中的各级父目录。<br>示例：</p>
+<ul>
+<li>hadoop fs -mkdir &#x2F;user&#x2F;hadoop&#x2F;dir1 &#x2F;user&#x2F;hadoop&#x2F;dir2</li>
+<li>hadoop fs -mkdir hdfs:&#x2F;&#x2F;host1:port1&#x2F;user&#x2F;hadoop&#x2F;dir hdfs:&#x2F;&#x2F;host2:port2&#x2F;user&#x2F;hadoop&#x2F;dir<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h5 id="movefromLocal"><a href="#movefromLocal" class="headerlink" title="movefromLocal"></a><a href="#movefromLocal" title="movefromLocal"></a>movefromLocal</h5><p>使用方法：dfs -moveFromLocal<br>输出一个”not implemented“信息。</p>
+<h6 id="mv"><a href="#mv" class="headerlink" title="mv"></a><a href="#mv" title="mv"></a>mv</h6><p>使用方法：hadoop fs -mv URI [URI …]<br>将文件从源路径移动到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。不允许在不同的文件系统间移动文件。<br>示例：</p>
+<ul>
+<li>hadoop fs -mv &#x2F;user&#x2F;hadoop&#x2F;file1 &#x2F;user&#x2F;hadoop&#x2F;file2</li>
+<li>hadoop fs -mv hdfs:&#x2F;&#x2F;host:port&#x2F;file1 hdfs:&#x2F;&#x2F;host:port&#x2F;file2 hdfs:&#x2F;&#x2F;host:port&#x2F;file3 hdfs:&#x2F;&#x2F;host:port&#x2F;dir1<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="put"><a href="#put" class="headerlink" title="put"></a><a href="#put" title="put"></a>put</h6><p>使用方法：hadoop fs -put …<br>从本地文件系统中复制单个或多个源路径到目标文件系统。也支持从标准输入中读取输入写入目标文件系统。</p>
+<ul>
+<li>hadoop fs -put localfile &#x2F;user&#x2F;hadoop&#x2F;hadoopfile</li>
+<li>hadoop fs -put localfile1 localfile2 &#x2F;user&#x2F;hadoop&#x2F;hadoopdir</li>
+<li>hadoop fs -put localfile hdfs:&#x2F;&#x2F;host:port&#x2F;hadoop&#x2F;hadoopfile</li>
+<li>hadoop fs -put - hdfs:&#x2F;&#x2F;host:port&#x2F;hadoop&#x2F;hadoopfile<br>从标准输入中读取输入。<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="rm"><a href="#rm" class="headerlink" title="rm"></a><a href="#rm" title="rm"></a>rm</h6><p>使用方法：hadoop fs -rm URI [URI …]<br>删除指定的文件。只删除非空目录和文件。请参考rmr命令了解递归删除。<br>示例：</p>
+<ul>
+<li>hadoop fs -rm hdfs:&#x2F;&#x2F;host:port&#x2F;file &#x2F;user&#x2F;hadoop&#x2F;emptydir<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="rmr"><a href="#rmr" class="headerlink" title="rmr"></a><a href="#rmr" title="rmr"></a>rmr</h6><p>使用方法：hadoop fs -rmr URI [URI …]<br>delete的递归版本。<br>示例：</p>
+<ul>
+<li>hadoop fs -rmr &#x2F;user&#x2F;hadoop&#x2F;dir</li>
+<li>hadoop fs -rmr hdfs:&#x2F;&#x2F;host:port&#x2F;user&#x2F;hadoop&#x2F;dir<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="setrep"><a href="#setrep" class="headerlink" title="setrep"></a><a href="#setrep" title="setrep"></a>setrep</h6><p>使用方法：hadoop fs -setrep [-R]<br>改变一个文件的副本系数。-R选项用于递归改变目录下所有文件的副本系数。<br>示例：</p>
+<ul>
+<li>hadoop fs -setrep -w 3 -R &#x2F;user&#x2F;hadoop&#x2F;dir1<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="stat"><a href="#stat" class="headerlink" title="stat"></a><a href="#stat" title="stat"></a>stat</h6><p>使用方法：hadoop fs -stat URI [URI …]<br>返回指定路径的统计信息。<br>示例：</p>
+<ul>
+<li>hadoop fs -stat path<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="tail"><a href="#tail" class="headerlink" title="tail"></a><a href="#tail" title="tail"></a>tail</h6><p>使用方法：hadoop fs -tail [-f] URI<br>将文件尾部1K字节的内容输出到stdout。支持-f选项，行为和Unix中一致。<br>示例：</p>
+<ul>
+<li>hadoop fs -tail pathname<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+<h6 id="test"><a href="#test" class="headerlink" title="test"></a><a href="#test" title="test"></a>test</h6><p>使用方法：hadoop fs -test -[ezd] URI<br>选项：<br>    -e 检查文件是否存在。如果存在则返回0。<br>    -z 检查文件是否是0字节。如果是则返回0。<br>    -d 如果路径是个目录，则返回1，否则返回0。<br>示例：</p>
+<ul>
+<li>hadoop fs -test -e filename</li>
+</ul>
+<h6 id="text"><a href="#text" class="headerlink" title="text"></a><a href="#text" title="text"></a>text</h6><p>使用方法：hadoop fs -text<br>将源文件输出为文本格式。允许的格式是zip和TextRecordInputStream。</p>
+<h6 id="touchz"><a href="#touchz" class="headerlink" title="touchz"></a><a href="#touchz" title="touchz"></a>touchz</h6><p>使用方法：hadoop fs -touchz URI [URI …]<br>创建一个0字节的空文件。<br>示例：</p>
+<ul>
+<li>hadoop fs -touchz pathname<br>返回值：成功返回0，失败返回-1。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="print-no-link">#大数据</a>
+      
+        <a href="/tags/Hadoop/" class="print-no-link">#Hadoop</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>「Hadoop」Hadoop常用命令</div>
+      <div>http://example.com/2023/07/27/「Hadoop」Hadoop常用命令/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>李贵发</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/27/%E3%80%8CJavaScript%E3%80%8DJavaScript%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="「JavaScript」JavaScript作用域">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">「JavaScript」JavaScript作用域</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/27/%E3%80%8CSQLServer%E3%80%8D%E7%81%B5%E6%B4%BB%E7%9A%84DBContext%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86/" title="「SQLServer」灵活的DBContext生命周期管理">
+                        <span class="hidden-mobile">「SQLServer」灵活的DBContext生命周期管理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

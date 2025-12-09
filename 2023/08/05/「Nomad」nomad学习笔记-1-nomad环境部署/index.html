@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="李贵发">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="nomad 是一个灵活的对应用进行部署、调度、管理，用于跨本地和云大规模部署和管理容器和非容器化应用程序。（个人理解类似K8S，不过比较轻量，管理部署微服务，镜像等） nomad 必要组成server: nomad的服务端管理进程，用于管理所有的nomad的机器，负责将job、ctask等下发给client端 client: 一个nomad集群由多个client，client用于负载执行serve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Nomad」nomad学习笔记: 1 nomad环境部署">
+<meta property="og:url" content="http://example.com/2023/08/05/%E3%80%8CNomad%E3%80%8Dnomad%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-nomad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="三硝基甲苯">
+<meta property="og:description" content="nomad 是一个灵活的对应用进行部署、调度、管理，用于跨本地和云大规模部署和管理容器和非容器化应用程序。（个人理解类似K8S，不过比较轻量，管理部署微服务，镜像等） nomad 必要组成server: nomad的服务端管理进程，用于管理所有的nomad的机器，负责将job、ctask等下发给client端 client: 一个nomad集群由多个client，client用于负载执行serve">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/08/05/%E3%80%8CNomad%E3%80%8Dnomad%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-nomad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/20230805.png">
+<meta property="article:published_time" content="2023-08-05T14:11:16.000Z">
+<meta property="article:modified_time" content="2023-08-05T14:42:34.234Z">
+<meta property="article:author" content="李贵发">
+<meta property="article:tag" content="Nomad">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/08/05/%E3%80%8CNomad%E3%80%8Dnomad%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-nomad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/20230805.png">
+  
+  
+  
+  <title>「Nomad」nomad学习笔记: 1 nomad环境部署 - 三硝基甲苯</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>三硝基甲苯</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.mafengwo.cn/u/80743752.html" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>游记</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/VCG211447088287.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="「Nomad」nomad学习笔记: 1 nomad环境部署"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-05 22:11" pubdate>
+          2023年8月5日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">「Nomad」nomad学习笔记: 1 nomad环境部署</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>nomad 是一个灵活的对应用进行部署、调度、管理，用于跨本地和云大规模部署和管理容器和非容器化应用程序。（个人理解类似K8S，不过比较轻量，管理部署微服务，镜像等）</p>
+<h3 id="nomad-必要组成"><a href="#nomad-必要组成" class="headerlink" title="nomad 必要组成"></a>nomad 必要组成</h3><p>server: nomad的服务端管理进程，用于管理所有的nomad的机器，负责将job、ctask等下发给client端</p>
+<p>client: 一个nomad集群由多个client，client用于负载执行server端下发的job，已即部署应用的节点</p>
+<h3 id="nomad-安装"><a href="#nomad-安装" class="headerlink" title="nomad 安装"></a>nomad 安装</h3><p>nomad 安装比较简单</p>
+<h6 id="第一步，下载nomad的二进制文件-下载地址如下"><a href="#第一步，下载nomad的二进制文件-下载地址如下" class="headerlink" title="第一步，下载nomad的二进制文件, 下载地址如下"></a>第一步，下载nomad的二进制文件, 下载地址如下</h6><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>developer.hashicorp.com<span class="hljs-regexp">/nomad/</span>downloads<br></code></pre></td></tr></table></figure>
+<h6 id="第二步，下载后解压，配置环境变量"><a href="#第二步，下载后解压，配置环境变量" class="headerlink" title="第二步，下载后解压，配置环境变量"></a>第二步，下载后解压，配置环境变量</h6><h6 id="第三步，-验证安装"><a href="#第三步，-验证安装" class="headerlink" title="第三步， 验证安装"></a>第三步， 验证安装</h6><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">nomad</span> -v<br><br><span class="hljs-comment">//显示</span><br><span class="hljs-symbol">Nomad</span> <span class="hljs-built_in">v1</span>.<span class="hljs-number">6</span>.<span class="hljs-number">1</span><br><span class="hljs-symbol">BuildDate</span> <span class="hljs-number">2023</span>-<span class="hljs-number">07</span>-<span class="hljs-number">21</span>T13:<span class="hljs-number">49</span>:<span class="hljs-number">42</span>Z<br><span class="hljs-symbol">Revision</span> <span class="hljs-number">515895</span>c7690cdc72278018dc5dc58aca41204ccc<br></code></pre></td></tr></table></figure>
+
+<h3 id="启动server端"><a href="#启动server端" class="headerlink" title="启动server端"></a>启动server端</h3><p>nomad 主要有两个进程server和client， 这里先启动server端<br>新建文件夹 nomad, 并新建文件 server.nomad, 内容如下:</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;server1&quot;</span><br><br>log_level <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DEBUG&quot;</span><br><br>data_dir <span class="hljs-operator">=</span> <span class="hljs-string">&quot;/Users/liguifa/nomad&quot;</span><br><br>server &#123;<br>    enabled <span class="hljs-operator">=</span> true<br>    bootstrap_expect <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br>&#125;<br><br>ports &#123;<br>  http <span class="hljs-operator">=</span> <span class="hljs-number">4646</span><br>  rpc  <span class="hljs-operator">=</span> <span class="hljs-number">4647</span><br>  serf <span class="hljs-operator">=</span> <span class="hljs-number">4648</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其中:<br>name 指定server的名称为server1<br>log_level 指定日志的输出类型为debug<br>data_dir 指定nomad对应的数据存储文件夹，这里需要调整成对应的目录<br>ports 指定server的端口</p>
+<p>文件修改好之后，使用命令启动server</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">nomad agent -config <span class="hljs-regexp">/Users/</span>liguifa<span class="hljs-regexp">/nomad/</span>conf/server.name<br></code></pre></td></tr></table></figure>
+
+<p>启动完成后可使用下面地址访问nomad的管理页面</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">4646</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="启动client"><a href="#启动client" class="headerlink" title="启动client"></a>启动client</h3><p>在文件夹 nomad 中新建文件 cient.nomad, 内容如下:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs makefile">name = <span class="hljs-string">&quot;client1&quot;</span><br><br><span class="hljs-comment"># Increase log verbosity</span><br>log_level = <span class="hljs-string">&quot;DEBUG&quot;</span><br><br><span class="hljs-comment"># Setup data dir</span><br>data_dir = <span class="hljs-string">&quot;/Users/liguifa/nomad&quot;</span><br><br><span class="hljs-comment"># Enable the client</span><br>client &#123;<br>enabled = true<br><br><span class="hljs-comment"># For demo assume we are talking to server1. For production,</span><br><span class="hljs-comment"># this should be like &quot;nomad.service.consul:4647&quot; and a system</span><br><span class="hljs-comment"># like Consul used for service discovery.</span><br>servers = [<span class="hljs-string">&quot;192.168.2.101:4647&quot;</span>]<br><br>options &#123;<br>    <span class="hljs-string">&quot;driver.raw_exec.enable&quot;</span> = <span class="hljs-string">&quot;1&quot;</span><br>  &#125;<br>&#125;<br><br><span class="hljs-comment"># Modify our port to avoid a collision with server1</span><br>ports &#123;<br>http = 5656<br>&#125;<br><br>datacenter = <span class="hljs-string">&quot;release&quot;</span><br></code></pre></td></tr></table></figure>
+<p>其中<br>name 指定client的名称是client1<br>servers 指定需要连接的server地址，已即是上一步中启动的server</p>
+<p>文件修改好之后，使用下面命令启动client</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">nomad agent -config <span class="hljs-regexp">/Users/</span>liguifa<span class="hljs-regexp">/nomad/</span>conf/client.nomad<br></code></pre></td></tr></table></figure>
+
+<h3 id="启动job"><a href="#启动job" class="headerlink" title="启动job"></a>启动job</h3><p>server和client都启动完成后，我们就可以启动job了<br>新建文件job.name，内容如下</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs abnf">job <span class="hljs-string">&quot;cron&quot;</span> &#123;<br>    datacenters <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;release&quot;</span>]<br>    type <span class="hljs-operator">=</span> <span class="hljs-string">&quot;batch&quot;</span><br>    group <span class="hljs-string">&quot;test&quot;</span> &#123;<br>        count <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br>        task <span class="hljs-string">&quot;one&quot;</span> &#123;<br>            driver <span class="hljs-operator">=</span> <span class="hljs-string">&quot;raw_exec&quot;</span><br>            config &#123;<br>                command <span class="hljs-operator">=</span> <span class="hljs-string">&quot;/bin/sleep&quot;</span><br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>文件修改好之后，使用下面命令启动</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">nomad job run <span class="hljs-regexp">/Users/</span>liguifa<span class="hljs-regexp">/nomad/</span>conf/job.nomad<br></code></pre></td></tr></table></figure>
+<p>任务启动后我们就能在管理页面上看到我们的任务</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>nomad的环境部署比较简单，总结来说就是先启动server, 然后启动client，之后我们便可提交job，三步执行之后便实现了如下效果<br><img src="/2023/08/05/%E3%80%8CNomad%E3%80%8Dnomad%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-nomad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/20230805.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Nomad/" class="print-no-link">#Nomad</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>「Nomad」nomad学习笔记: 1 nomad环境部署</div>
+      <div>http://example.com/2023/08/05/「Nomad」nomad学习笔记-1-nomad环境部署/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>李贵发</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/08/28/%E3%80%8CElasticSearch%E3%80%8DES%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6%E5%92%8C%E5%B8%B8%E8%A7%81%E4%BB%BB%E5%8A%A1%E4%BB%8B%E7%BB%8D/" title="「ElasticSearch」ES 任务管理机制和常见任务介绍">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">「ElasticSearch」ES 任务管理机制和常见任务介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/29/%E3%80%8CElasticSearch%E3%80%8DKibana-Timelion%E8%AF%AD%E6%B3%95%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" title="「ElasticSearch」Kibana Timelion语法函数总结">
+                        <span class="hidden-mobile">「ElasticSearch」Kibana Timelion语法函数总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
